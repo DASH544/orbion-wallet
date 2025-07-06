@@ -1,16 +1,23 @@
 import React, { useState } from "react";
-import { generateMnemonic } from "bip39";
+import { generateMnemonic, mnemonicToSeed } from "bip39";
 import { Link, useOutletContext } from "react-router-dom";
-import Wallet from "../components/Wallet";
-import Secret from "../components/Secret";
+import { ethWallet } from "../utils/ethWallet.js";
+
 const Gen = () => {
   const { dark, setDark } = useOutletContext();
   const [mnemonic, setMnemonic] = useState("");
+  const [currIndex, setCurrIndex] = useState(1);
   function genMnemonic() {
+    const wall=localStorage.getItem("Wallet")
+    if(!wall||wall.length==0){
     const mne = generateMnemonic(128);
     setMnemonic(mne);
     localStorage.setItem("phrase",mne)
+   ethWallet(mne,currIndex)
+    setCurrIndex(currIndex+1)
   }
+  }
+
   return (
     <>
       <div className="max-w-6xl mx-auto">
