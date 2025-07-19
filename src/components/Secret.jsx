@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-
+import { WalletData } from "../context/WalletsContext";
 const Secret = ({props}) => {
-  const phrase=localStorage.getItem("phrase")
-  const arr=phrase.split(" ")
+  const {mnemonic}=WalletData()
+  const arr=mnemonic.split(" ")
   const [show,setShow]=useState(false)
 
   return (
     <>
-      <div onClick={()=>{navigator.clipboard.writeText(phrase)}} className="max-w-6xl mx-auto border border-gray-500 mb-12 px-8 py-4 flex flex-col gap-6 rounded-md cursor-pointer">
+      <div onClick={()=>{navigator.clipboard.writeText(mnemonic)}} className="max-w-6xl mx-auto border border-gray-500 mb-12 px-8 py-4 flex flex-col gap-6 rounded-md cursor-pointer">
         <div className="flex items-center justify-between  ">
           <h1 className="text-3xl font-bold">Your Secret Phrase</h1>
           <button className="hover:scale-110 cursor-pointer" onClick={()=>(setShow(prev=>!prev))}>{show ? (<svg width={20} fill="gray" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M0.256 23.481c0 0.269 0.106 0.544 0.313 0.75 0.412 0.413 1.087 0.413 1.5 0l14.119-14.119 13.913 13.912c0.413 0.413 1.087 0.413 1.5 0s0.413-1.087 0-1.5l-14.663-14.669c-0.413-0.412-1.088-0.412-1.5 0l-14.869 14.869c-0.213 0.212-0.313 0.481-0.313 0.756z"></path> </g></svg>):(<svg width={20} fill="gray" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M0.256 8.606c0-0.269 0.106-0.544 0.313-0.75 0.412-0.412 1.087-0.412 1.5 0l14.119 14.119 13.913-13.912c0.413-0.412 1.087-0.412 1.5 0s0.413 1.088 0 1.5l-14.663 14.669c-0.413 0.413-1.088 0.413-1.5 0l-14.869-14.869c-0.213-0.213-0.313-0.481-0.313-0.756z"></path> </g></svg>)}</button>

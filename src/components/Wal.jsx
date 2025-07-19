@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { Wallet } from "ethers";
-const Wal = ({wallet,index}) => {
-  
+const Wal = ({ wallet, index }) => {
   const [showKey, setKey] = useState(false);
   return (
     <>
-      <div className="max-w-6xl mx-auto border border-gray-500 px-8 py-4 flex flex-col gap-6 rounded-md">
+      <div className="border border-gray-500 px-8 py-4 flex flex-col gap-6 rounded-md">
         <div className="flex justify-between items-center ">
-          <h1 className="text-3xl font-bold">Wallet {index+1}</h1>
+          <h1 className="text-3xl font-bold">Wallet {index + 1}</h1>
           <button className="cursor-pointer px-4 py-2">
             <svg
               width={20}

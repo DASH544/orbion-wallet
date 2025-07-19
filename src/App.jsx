@@ -4,6 +4,9 @@ import Layout from "./Layout";
 import Home from "./pages/Home";
 import Gen from "./pages/Gen";
 import Wallets from "./pages/Wallets";
+import { BaseWallet } from "ethers";
+import WalletTest from "./pages/WalletTest";
+import SeedPage from "./pages/seedpage";
 
 function App() {
   
@@ -14,6 +17,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/phrase" element={<Gen />} />
           <Route path="/wallets" element={<Wallets />} />
+          <Route path="/test" element={<SeedPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

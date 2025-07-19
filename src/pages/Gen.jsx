@@ -2,21 +2,22 @@ import React, { useState } from "react";
 import { generateMnemonic, mnemonicToSeed } from "bip39";
 import { Link, useOutletContext } from "react-router-dom";
 import { ethWallet } from "../utils/ethWallet.js";
-
+import { WalletData } from "../context/WalletsContext.jsx";
 const Gen = () => {
   const { dark, setDark } = useOutletContext();
-  const [mnemonic, setMnemonic] = useState("");
-  const [currIndex, setCurrIndex] = useState(1);
-  function genMnemonic() {
-    const wall=localStorage.getItem("Wallet")
-    if(!wall||wall.length==0){
-    const mne = generateMnemonic(128);
-    setMnemonic(mne);
-    localStorage.setItem("phrase",mne)
-   ethWallet(mne,currIndex)
-    setCurrIndex(currIndex+1)
-  }
-  }
+  const {genMnemonic}=WalletData()
+  // const [mnemonic, setMnemonic] = useState("");
+  // const [currIndex, setCurrIndex] = useState(1);
+  // function genMnemonic() {
+  //   const wall=localStorage.getItem("Wallet")
+  //   if(!wall||wall.length==0){
+  //   const mne = generateMnemonic(128);
+  //   setMnemonic(mne);
+  //   localStorage.setItem("phrase",mne)
+  //  ethWallet(mne,currIndex)
+  //   setCurrIndex(currIndex+1)
+  // }
+  // }
 
   return (
     <>
