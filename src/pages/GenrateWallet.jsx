@@ -1,12 +1,16 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState,useContext } from "react";
 import { generateMnemonic } from "bip39";
 import { Link, useOutletContext } from "react-router-dom";
-
+import { GenEthWallet } from "../utils/GenEthWallet";
+import {GenSolWallet} from "../utils/GenSolWallet"
+import WalletsContext from "../context/WalletsContext";
 const GenerateWallet = () => {
   const { dark, setDark } = useOutletContext();
+    const { walletType } = useContext(WalletsContext);
   const [seed, setSeed] = useState("");
   const inputBox = useRef(null);
-  function generateSeed() {
+  async function generateSeed() {
+    let seedVal;
     if (inputBox.current.value == "") {
       const seedPhrase = localStorage.getItem("mnemonic");
       if (!seedPhrase) {
@@ -15,13 +19,26 @@ const GenerateWallet = () => {
         localStorage.setItem("mnemonic", seedVal);
         console.log("Seed saved in local storage 1st time");
       } else {
-        setSeed(seedPhrase);
+        seedVal = seedPhrase;
       }
     } else {
-      setSeed(inputBox.current.value);
-      localStorage.setItem("mnemonic", inputBox.current.value);
-      console.log(seed);
+      seedVal = inputBox.current.value;
+      localStorage.setItem("mnemonic", seedVal);
+      console.log("Seed manually entered");
     }
+    setSeed(seedVal);
+
+    const fetchWallet = async () => {
+      let walletData;
+      if (walletType === "Eth") {
+        walletData = await GenEthWallet(seed, 0);
+         localStorage.setItem("wallet", JSON.stringify([walletData]));
+      } else if (walletType === "Sol") {
+        walletData = await GenSolWallet(seed, 0);
+        localStorage.setItem("wallet", JSON.stringify([walletData]));
+      }
+    };
+    fetchWallet()
   }
   // const [mnemonic, setMnemonic] = useState("");
   // const [currIndex, setCurrIndex] = useState(1);

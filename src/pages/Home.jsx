@@ -1,9 +1,10 @@
-import React from "react";
+import React,{useContext} from "react";
 import { Link } from "react-router-dom";
+import WalletsContext from "../context/WalletsContext";
 import { useOutletContext } from 'react-router-dom';
 const Home = () => {
   const { dark, setDark } = useOutletContext();
-
+const { walletType, setWalletType } = useContext(WalletsContext);
   return (
     <>
       <div className="max-w-7xl mx-auto mt-16">
@@ -14,10 +15,10 @@ const Home = () => {
           </div>
           <div className="flex gap-5">
             <Link to="/phrase">
-              <button className={` ${dark ? "bg-black text-white" :"bg-white text-black"} px-10 py-2 rounded-md cursor-pointer hover:opacity-75`}>Ethereum</button>
+              <button onClick={() => setWalletType("Eth")} className={` ${dark ? "bg-black text-white" :"bg-white text-black"} px-10 py-2 rounded-md cursor-pointer hover:opacity-75`}>Ethereum</button>
             </Link>
             <Link to="/phrase">
-              <button className={` ${dark ? "bg-black text-white" :"bg-white text-black "} px-10 py-2 rounded-md cursor-pointer hover:opacity-75`}>Solana</button>
+              <button onClick={() => setWalletType("Sol")} className={` ${dark ? "bg-black text-white" :"bg-white text-black "} px-10 py-2 rounded-md cursor-pointer hover:opacity-75`}>Solana</button>
             </Link>
           </div>
         </div>
