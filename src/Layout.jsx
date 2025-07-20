@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "./components/Header.jsx";
 import { Outlet } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
-import { WalletContextProvider } from "./context/WalletsContext.jsx";
+import { WalletsContextProvider } from "./context/WalletsContext.jsx";
 import Footer from "./components/Footer.jsx";
 
 const Layout = () => {
@@ -15,9 +15,9 @@ const Layout = () => {
         }`}
       >
         <Header dark={dark} setDark={setDark} />
-        <WalletContextProvider>
+        <WalletsContextProvider>
           <Outlet context={{ dark, setDark }} />
-        </WalletContextProvider>
+        </WalletsContextProvider>
         <Footer />
       </div>
     </>

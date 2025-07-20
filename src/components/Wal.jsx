@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Wallet } from "ethers";
 const Wal = ({ wallet, index }) => {
   const [showKey, setKey] = useState(false);
+
   return (
     <>
       <div className="border border-gray-500 px-8 py-4 flex flex-col gap-6 rounded-md">
