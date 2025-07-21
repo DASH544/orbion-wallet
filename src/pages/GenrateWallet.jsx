@@ -1,14 +1,17 @@
-import React, { useRef, useState,useContext } from "react";
+import React, { useRef, useState, useContext } from "react";
 import { generateMnemonic } from "bip39";
 import { Link, useOutletContext } from "react-router-dom";
 import { GenEthWallet } from "../utils/GenEthWallet";
-import {GenSolWallet} from "../utils/GenSolWallet"
+import { GenSolWallet } from "../utils/GenSolWallet";
 import WalletsContext from "../context/WalletsContext";
+import { ToastContainer, toast } from "react-toastify";
+
 const GenerateWallet = () => {
   const { dark, setDark } = useOutletContext();
-    const { walletType } = useContext(WalletsContext);
+  const { walletType } = useContext(WalletsContext);
   const [seed, setSeed] = useState("");
   const inputBox = useRef(null);
+  const notify = () => toast("Wallet Generated Successfully");
   async function generateSeed() {
     let seedVal;
     if (inputBox.current.value == "") {
@@ -32,13 +35,13 @@ const GenerateWallet = () => {
       let walletData;
       if (walletType === "Eth") {
         walletData = await GenEthWallet(seed, 0);
-         localStorage.setItem("wallet", JSON.stringify([walletData]));
+        localStorage.setItem("wallet", JSON.stringify([walletData]));
       } else if (walletType === "Sol") {
         walletData = await GenSolWallet(seed, 0);
         localStorage.setItem("wallet", JSON.stringify([walletData]));
       }
     };
-    fetchWallet()
+    fetchWallet();
   }
   // const [mnemonic, setMnemonic] = useState("");
   // const [currIndex, setCurrIndex] = useState(1);
@@ -74,13 +77,30 @@ const GenerateWallet = () => {
               className={`${
                 dark ? "bg-black text-white" : "bg-white text-black"
               } px-10 py-2 rounded-md cursor-pointer hover:opacity-75`}
-              onClick={generateSeed}
+              onClick={async() => {
+                generateSeed();
+                notify();
+                console.log("h");
+              }}
             >
               Generate Wallet
             </button>
           </Link>
         </div>
       </div>
+      <ToastContainer
+        limit={2}
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </>
   );
 };

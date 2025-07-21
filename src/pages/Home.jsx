@@ -1,28 +1,68 @@
-import React,{useContext} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import WalletsContext from "../context/WalletsContext";
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext } from "react-router-dom";
+import { Wallet } from "ethers";
+import Wallets from "./Wallets";
 const Home = () => {
   const { dark, setDark } = useOutletContext();
-const { walletType, setWalletType } = useContext(WalletsContext);
+  const { walletType, setWalletType } = useContext(WalletsContext);
+  const [hasWallet, setHasWallet] = useState();
+  function renderWallet() {
+    if (localStorage.getItem("wallet")) {
+      setHasWallet(true);
+    }
+  }
+  useEffect(() => {
+    renderWallet();
+  }, []);
   return (
     <>
-      <div className="max-w-7xl mx-auto mt-16">
-        <div className="flex flex-col gap-6">
-          <div>
-            <h1 className="text-5xl font-bold">Orbit the blockchains with <span className="font-bold bg-gradient-to-r from-indigo-500 via-purple-400 to-pink-400 bg-clip-text text-transparent">Orbion</span></h1>
-            <p className="text-2xl">Choose a blockchain to get started</p>
-          </div>
-          <div className="flex gap-5">
-            <Link to="/phrase">
-              <button onClick={() => setWalletType("Eth")} className={` ${dark ? "bg-black text-white" :"bg-white text-black"} px-10 py-2 rounded-md cursor-pointer hover:opacity-75`}>Ethereum</button>
-            </Link>
-            <Link to="/phrase">
-              <button onClick={() => setWalletType("Sol")} className={` ${dark ? "bg-black text-white" :"bg-white text-black "} px-10 py-2 rounded-md cursor-pointer hover:opacity-75`}>Solana</button>
-            </Link>
+      {hasWallet ? (
+        <Wallets />
+      ) : (
+        <div className="max-w-7xl mx-auto mt-16">
+          <div className="flex flex-col gap-6">
+            <div>
+              <h1 className="text-5xl font-bold">
+                Orbit the blockchains with{" "}
+                <span className="font-bold bg-gradient-to-r from-indigo-500 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                  Orbion
+                </span>
+              </h1>
+              <p className="text-2xl">Choose a blockchain to get started</p>
+            </div>
+            <div className="flex gap-5">
+              <Link to="/phrase">
+                <button
+                  onClick={() => {
+                    setWalletType("Eth");
+                    localStorage.setItem("walletType", "Eth");
+                  }}
+                  className={` ${
+                    dark ? "bg-black text-white" : "bg-white text-black"
+                  } px-10 py-2 rounded-md cursor-pointer hover:opacity-75`}
+                >
+                  Ethereum
+                </button>
+              </Link>
+              <Link to="/phrase">
+                <button
+                  onClick={() => {
+                    setWalletType("Sol");
+                    localStorage.setItem("walletType", "Sol");
+                  }}
+                  className={` ${
+                    dark ? "bg-black text-white" : "bg-white text-black "
+                  } px-10 py-2 rounded-md cursor-pointer hover:opacity-75`}
+                >
+                  Solana
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

@@ -1,17 +1,15 @@
 import React, { useState } from "react";
-
-const SecretSeed = ({props}) => {
-   
+import { ToastContainer, toast } from "react-toastify";
+const SecretSeed = ({ props }) => {
   const seed = localStorage.getItem("mnemonic");
   const arr = seed.split(" ");
   const [show, setShow] = useState(false);
+  const notify = () => toast("Copied To Clipboard");
 
   return (
     <>
       <div
-        onClick={() => {
-          navigator.clipboard.writeText(seed);
-        }}
+        onClick={() => {}}
         className="max-w-6xl mx-auto border border-gray-500 mb-12 px-8 py-4 flex flex-col gap-6 rounded-md cursor-pointer"
       >
         <div className="flex items-center justify-between  ">
@@ -79,7 +77,14 @@ const SecretSeed = ({props}) => {
                 })}
               </div>
               <div className="">
-                <button className="flex gap-2 cursor-pointer hover:opacity-75">
+                <button
+                  onClick={() => {
+                    notify();
+                    console.log("F");
+                    navigator.clipboard.writeText(seed);
+                  }}
+                  className="flex gap-2 cursor-pointer hover:opacity-75"
+                >
                   <svg
                     width={20}
                     viewBox="0 0 24 24"
@@ -114,6 +119,19 @@ const SecretSeed = ({props}) => {
           //  <Secret props={{dark,setDark,mnemonic}}/>
         }
       </div>
+      <ToastContainer
+      limit={2}
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </>
   );
 };
